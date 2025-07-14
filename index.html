@@ -1,87 +1,146 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alaz & Alzen - Aşk Soruları</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alaz & Alzen - Tahminli Aşk Soruları</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      margin:0; padding:0;
       font-family: 'Arial', sans-serif;
       background-color: #ffd6e8;
       color: #b30059;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding-top: 40px;
+      overflow-x: hidden;
       position: relative;
-    }.kalp {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  background: #ff69b4;
-  transform: rotate(-45deg);
-  animation: yukari 6s linear infinite;
-  opacity: 0.7;
-}
-.kalp::before,
-.kalp::after {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background: #ff69b4;
-  border-radius: 50%;
-}
-.kalp::before {
-  top: -10px;
-  left: 0;
-}
-.kalp::after {
-  left: 10px;
-  top: 0;
-}
-@keyframes yukari {
-  0% { bottom: -20px; }
-  100% { bottom: 110vh; }
-}
-
-#container {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
-  max-width: 500px;
-  text-align: center;
-}
-
-button {
-  background-color: #ff69b4;
-  color: white;
-  padding: 12px 25px;
-  font-size: 1em;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-button:hover {
-  background-color: #e60073;
-}
-
+    }
+    #container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+      max-width: 520px;
+      width: 90vw;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin: 20px 0 10px;
+    }
+    p {
+      font-size: 1.1em;
+      line-height: 1.4em;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 12px 15px;
+      width: 100%;
+      font-size: 1em;
+      border: 2px solid #ff69b4;
+      border-radius: 20px;
+      outline: none;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus {
+      border-color: #e60073;
+    }
+    button {
+      background-color: #ff69b4;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 10px 5px 0 5px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover:not(:disabled) {
+      background-color: #e60073;
+    }
+    button:disabled {
+      background-color: #ffb7d1;
+      cursor: default;
+    }
+    #exportBtn {
+      margin-top: 30px;
+    }
+    #finalMessage {
+      background: #ffe6f0;
+      padding: 20px;
+      border-radius: 20px;
+      margin-top: 30px;
+      font-size: 1.15em;
+      line-height: 1.5em;
+      color: #9b004c;
+      display: none;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+    /* Uçan kalpler */
+    .kalp {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      background: #ff69b4;
+      transform: rotate(-45deg);
+      animation: yukari 6s linear infinite;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .kalp::before,
+    .kalp::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #ff69b4;
+      border-radius: 50%;
+    }
+    .kalp::before {
+      top: -9px;
+      left: 0;
+    }
+    .kalp::after {
+      left: 9px;
+      top: 0;
+    }
+    @keyframes yukari {
+      0% { bottom: -20px; }
+      100% { bottom: 110vh; }
+    }
   </style>
 </head>
 <body>
   <div id="container">
     <h1>Alaz & Alzen 💖</h1>
-    <div id="soruCevap">
-      <p>Hazır mısın Alzen? Sürpriz başlıyor...</p>
+    <div id="questionArea">
+      <h2>Sürprizi Açmak İçin Butona Bas!</h2>
+      <button id="startBtn">Sürprizi Aç</button>
     </div>
-    <button onclick="sonraki()">Devam Et</button>
-  </div>  <script>
+    <div id="interactionArea" style="display:none;">
+      <h2 id="questionText"></h2>
+      <input type="text" id="guessInput" placeholder="Tahminini buraya yaz..." autocomplete="off" />
+      <button id="submitGuessBtn" disabled>Tahminimi Gönder</button>
+      <div id="answerArea" style="margin-top:20px; font-size:1.1em; color:#800040;"></div>
+      <button id="nextBtn" style="display:none;">Sonraki Soru</button>
+      <button id="exportBtn" style="display:none;">Tahminleri Export Et</button>
+    </div>
+    <div id="finalMessage"></div>
+  </div>
+
+  <script>
     const veriler = [
       {
         soru: "Sence seni neden bu kadar çok seviyorum?",
@@ -106,35 +165,105 @@ button:hover {
       {
         soru: "Alzen, seni gerçekten ne kadar seviyorum?",
         cevap: "Tarif edilemeyecek kadar… sonsuzun bile ötesinde…"
-      },
-      {
-        soru: "Son Sözüm...",
-        cevap: `Alzen’im…<br><br>
-        Bu sadece birkaç sorudan ibaret değil. Bu sayfa, içimde büyüyen duyguların sadece küçük bir yansıması.<br>
-        Mesafeler bizi ayırsa da, kalbim her zaman seninle.<br>
-        Her soruya cevabımda, sana olan sevgimin büyüklüğü gizli.<br>
-        Seninle geçirdiğim her saniye bir mucize.<br>
-        Ve ben, seni hep seveceğim…<br><br>
-        Sonsuza kadar: Alaz 💖`
       }
     ];
 
-    let index = 0;
+    const finalMessageText = 
+`Alzen’im…
 
-    function sonraki() {
-      const gosterim = document.getElementById("soruCevap");
+Bu sadece birkaç sorudan ibaret değil. Bu sayfa, içimde büyüyen duyguların sadece küçük bir yansıması.
+Mesafeler bizi ayırsa da, kalbim her zaman seninle.
+Her soruya cevabımda, sana olan sevgimin büyüklüğü gizli.
+Seninle geçirdiğim her saniye bir mucize.
+Ve ben, seni hep seveceğim…
+Sonsuza kadar: Alaz 💖`;
+
+    let index = 0;
+    let tahminler = [];
+
+    const startBtn = document.getElementById("startBtn");
+    const questionArea = document.getElementById("questionArea");
+    const interactionArea = document.getElementById("interactionArea");
+    const questionText = document.getElementById("questionText");
+    const guessInput = document.getElementById("guessInput");
+    const submitGuessBtn = document.getElementById("submitGuessBtn");
+    const answerArea = document.getElementById("answerArea");
+    const nextBtn = document.getElementById("nextBtn");
+    const exportBtn = document.getElementById("exportBtn");
+    const finalMessage = document.getElementById("finalMessage");
+
+    startBtn.addEventListener("click", () => {
+      questionArea.style.display = "none";
+      interactionArea.style.display = "block";
+      loadQuestion();
+    });
+
+    guessInput.addEventListener("input", () => {
+      submitGuessBtn.disabled = guessInput.value.trim() === "";
+    });
+
+    submitGuessBtn.addEventListener("click", () => {
+      const tahmin = guessInput.value.trim();
+      if (tahmin === "") return;
+      tahminler.push({ soru: veriler[index].soru, tahmin: tahmin });
+      answerArea.innerHTML = `<strong>Cevap:</strong> ${veriler[index].cevap}`;
+      submitGuessBtn.style.display = "none";
+      guessInput.style.display = "none";
+      nextBtn.style.display = "inline-block";
+      exportBtn.style.display = "inline-block";
+    });
+
+    nextBtn.addEventListener("click", () => {
+      index++;
       if (index < veriler.length) {
-        gosterim.innerHTML = `
-          <h2>${veriler[index].soru}</h2>
-          <p>${veriler[index].cevap}</p>
-        `;
-        index++;
+        loadQuestion();
       } else {
-        document.querySelector("button").style.display = "none";
+        showFinalMessage();
       }
+    });
+
+    exportBtn.addEventListener("click", () => {
+      if(tahminler.length === 0) {
+        alert("Henüz hiç tahmin girilmedi!");
+        return;
+      }
+      let text = "Alzen'in Tahminleri:\n\n";
+      tahminler.forEach((item, i) => {
+        text += `${i + 1}. Soru: ${item.soru}\n   Tahmin: ${item.tahmin}\n\n`;
+      });
+      download("tahminler.txt", text);
+    });
+
+    function loadQuestion() {
+      questionText.textContent = veriler[index].soru;
+      guessInput.value = "";
+      guessInput.style.display = "block";
+      submitGuessBtn.style.display = "inline-block";
+      submitGuessBtn.disabled = true;
+      answerArea.innerHTML = "";
+      nextBtn.style.display = "none";
+      exportBtn.style.display = tahminler.length > 0 ? "inline-block" : "none";
     }
 
-    // Uçan kalpler
+    function showFinalMessage() {
+      interactionArea.style.display = "none";
+      finalMessage.style.display = "block";
+      finalMessage.textContent = finalMessageText;
+      exportBtn.style.display = "none";
+      nextBtn.style.display = "none";
+    }
+
+    function download(filename, text) {
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+    // Uçan kalpler efekti
     setInterval(() => {
       const kalp = document.createElement("div");
       kalp.classList.add("kalp");
@@ -143,5 +272,6 @@ button:hover {
       document.body.appendChild(kalp);
       setTimeout(() => kalp.remove(), 7000);
     }, 400);
-  </script></body>
+  </script>
+</body>
 </html>

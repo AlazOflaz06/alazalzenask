@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alaz & Alzen - Aşk Soruları</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #ffd6e8;
+      color: #b30059;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }.kalp {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: #ff69b4;
+  transform: rotate(-45deg);
+  animation: yukari 6s linear infinite;
+  opacity: 0.7;
+}
+.kalp::before,
+.kalp::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #ff69b4;
+  border-radius: 50%;
+}
+.kalp::before {
+  top: -10px;
+  left: 0;
+}
+.kalp::after {
+  left: 10px;
+  top: 0;
+}
+@keyframes yukari {
+  0% { bottom: -20px; }
+  100% { bottom: 110vh; }
+}
+
+#container {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+  max-width: 500px;
+  text-align: center;
+}
+
+button {
+  background-color: #ff69b4;
+  color: white;
+  padding: 12px 25px;
+  font-size: 1em;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #e60073;
+}
+
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Alaz & Alzen 💖</h1>
+    <div id="soruCevap">
+      <p>Hazır mısın Alzen? Sürpriz başlıyor...</p>
+    </div>
+    <button onclick="sonraki()">Devam Et</button>
+  </div>  <script>
+    const veriler = [
+      {
+        soru: "Sence seni neden bu kadar çok seviyorum?",
+        cevap: "Çünkü her bakışın içimde çiçekler açtırıyor Alzen…"
+      },
+      {
+        soru: "İlk seni gördüğüm an ne hissettim?",
+        cevap: "Kalbimin yerinden fırladığını, sonunda 'o kişi'yi bulduğumu…"
+      },
+      {
+        soru: "Sence mesafeler aşkımıza engel mi?",
+        cevap: "Asla. Çünkü kalbim her zaman senin yanında, ne kadar uzakta olursan ol…"
+      },
+      {
+        soru: "Peki en çok ne zaman seni özlüyorum?",
+        cevap: "Gülüşünü hayal ettiğim her saniye…"
+      },
+      {
+        soru: "Sence birlikte geleceğimiz nasıl olur?",
+        cevap: "El ele, göz göze, aynı şehirde, aynı evde, sonsuz bir mutlulukla 💍"
+      },
+      {
+        soru: "Alzen, seni gerçekten ne kadar seviyorum?",
+        cevap: "Tarif edilemeyecek kadar… sonsuzun bile ötesinde…"
+      },
+      {
+        soru: "Son Sözüm...",
+        cevap: `Alzen’im…<br><br>
+        Bu sadece birkaç sorudan ibaret değil. Bu sayfa, içimde büyüyen duyguların sadece küçük bir yansıması.<br>
+        Mesafeler bizi ayırsa da, kalbim her zaman seninle.<br>
+        Her soruya cevabımda, sana olan sevgimin büyüklüğü gizli.<br>
+        Seninle geçirdiğim her saniye bir mucize.<br>
+        Ve ben, seni hep seveceğim…<br><br>
+        Sonsuza kadar: Alaz 💖`
+      }
+    ];
+
+    let index = 0;
+
+    function sonraki() {
+      const gosterim = document.getElementById("soruCevap");
+      if (index < veriler.length) {
+        gosterim.innerHTML = `
+          <h2>${veriler[index].soru}</h2>
+          <p>${veriler[index].cevap}</p>
+        `;
+        index++;
+      } else {
+        document.querySelector("button").style.display = "none";
+      }
+    }
+
+    // Uçan kalpler
+    setInterval(() => {
+      const kalp = document.createElement("div");
+      kalp.classList.add("kalp");
+      kalp.style.left = Math.random() * 100 + "vw";
+      kalp.style.bottom = "-20px";
+      document.body.appendChild(kalp);
+      setTimeout(() => kalp.remove(), 7000);
+    }, 400);
+  </script></body>
+</html>
